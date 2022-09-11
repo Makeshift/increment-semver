@@ -9,32 +9,48 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to release the next version
     steps:
-      #      Note Checkout is required for ${GITHUB_WORKSPACE} to be not empty
       - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: Increment Step Patch
-        id: increment-semver-patch
-        uses: ./
-        with:
-          version-level: patch
-
-      #      Optional I'm using this to get a less static changelog for the body of the release
-      - name: Get Changelog
-        id: changelog
+        uses: actions/checkout@v3
+      - name: Set Commit Description
+        id: commit_desc
         run: |
-          echo "::set-output name=CHANGELOG::$(cat CHANGELOG.md)"
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          echo "::set-output name=value::$(git log -1 --pretty=%B)"
+          # Git doing dubious ownership stuff again
+          git config --global --add safe.directory /github/workspace
+      - name: Update Readme
+        uses: npalm/action-docs-action@v1.2.0
         with:
-          tag_name: ${{ steps.increment-semver-patch.outputs.version }}
-          release_name: Release v${{ steps.increment-semver-patch.outputs.version }}
-          body: |
-            #### Changes in this Release:
-            ${{ steps.changelog.outputs.CHANGELOG }}
-          draft: false
+          readme: Readme.md
+      - uses: stefanzweifel/git-auto-commit-action@v4.14.1
+        id: auto-commit-action
+        with:
+          commit_message: "[no ci] (docs) ${{ steps.commit_desc.outputs.value }}"
+      - name: Checkout if new commit created
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.auto-commit-action.outputs.commit_hash }}
+
+      - name: Regex match on commit
+        uses: sunil-samtani/regex-action@v2
+        id: bump
+        with:
+          search_string: ${{ steps.commit_desc.outputs.value }}
+          regex_pattern: "major|minor|patch"
+
+      - name: Increment Semver
+        uses: ./
+        id: semver
+        with:
+          version-level: ${{ contains(fromJson('["major", "minor", "patch"]'), steps.bump.outputs.first_match) || 'patch' }}
+
+      - name: Release
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: ${{ steps.semver.outputs.version }}
           prerelease: false
+          files: |
+            action.yml
+            *.sh
+            Readme.md
