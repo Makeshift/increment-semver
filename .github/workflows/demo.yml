@@ -5,30 +5,28 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to test incrementing the version of a repository
     steps:
-
-#      Note Checkout is required for ${GITHUB_WORKSPACE} to be not empty
+      #      Note Checkout is required for ${GITHUB_WORKSPACE} to be not empty
       - name: Checkout
         uses: actions/checkout@v1
 
-
-#     Examples
+      #     Examples
       - name: Increment Step Patch
         id: increment-semver-patch
-        uses: Benbentwo/increment-semver@master
+        uses: Makeshift/increment-semver@master
         with:
-          version-level: '-p'
+          version-level: "-p"
 
       - name: Increment Step Minor
         id: increment-semver-minor
-        uses: Benbentwo/increment-semver@master
+        uses: Makeshift/increment-semver@master
         with:
-          version-level: '-m'
+          version-level: "-m"
 
       - name: Increment Step Major
         id: increment-semver-major
-        uses: Benbentwo/increment-semver@master
+        uses: Makeshift/increment-semver@master
         with:
-          version-level: '-M'
+          version-level: "-M"
 
       # Use the output from the `Increment Step X` step
       - name: Get the output version

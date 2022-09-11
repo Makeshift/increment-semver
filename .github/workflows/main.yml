@@ -6,17 +6,17 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to release the next version
     steps:
-#      Note Checkout is required for ${GITHUB_WORKSPACE} to be not empty
+      #      Note Checkout is required for ${GITHUB_WORKSPACE} to be not empty
       - name: Checkout
         uses: actions/checkout@v1
 
       - name: Increment Step Patch
         id: increment-semver-patch
-        uses: Benbentwo/increment-semver@master
+        uses: Makeshift/increment-semver@master
         with:
-          version-level: '-p'
+          version-level: "-p"
 
-#      Optional I'm using this to get a less static changelog for the body of the release
+      #      Optional I'm using this to get a less static changelog for the body of the release
       - name: Get Changelog
         id: changelog
         run: |

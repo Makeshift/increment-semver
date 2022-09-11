@@ -1,20 +1,23 @@
 # action.yml
-name: 'Increment Semver'
-description: 'Get the next version of a github repository'
+name: "Increment Semver"
+description: "Get the next version of a github repository"
 branding:
-  icon: 'git-commit'
-  color: 'gray-dark'
-author: Benbentwo
+  icon: "git-commit"
+  color: "gray-dark"
+author: Makeshift
 inputs:
-  version-level:  # id of input
-    description: 'Version Level to update [-Mmp]'
+  version-level: # id of input
+    description: "Version Level to update [-Mmp]"
     required: true
-    default: '-p'
+    default: "-p"
 outputs:
   version: # id of output
-    description: 'The incremented version'
+    description: "The incremented version"
+    value: ${{ steps.increment.outputs.version }}
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.version-level }}
+  using: "composite"
+  steps:
+    - name: Get version
+      id: out
+      shell: bash
+      run: ./entrypoint.sh ${{ inputs.version-level }}
