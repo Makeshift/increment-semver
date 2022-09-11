@@ -7,7 +7,7 @@ branding:
 author: Makeshift
 inputs:
   version-level: # id of input
-    description: "Version Level to update patch|minor|major"
+    description: "Version Level to update (patch|minor|major)"
     required: true
     default: patch
 outputs:

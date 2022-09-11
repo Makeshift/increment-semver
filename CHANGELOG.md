@@ -1,1 +1,0 @@
-Adding author to [Action.yaml](action.yml)

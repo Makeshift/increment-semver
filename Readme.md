@@ -1,7 +1,7 @@
-Github action for getting the next semver.
+Github action for getting the next semver based on the tags currently in the repository. 
 
-Example:
-========
+Example usage:
+```yaml
     on: [push]
     
     jobs:
@@ -13,6 +13,7 @@ Example:
           - name: Checkout
             uses: actions/checkout@v1
 
+    #     Dynamically based on commit message
           - name: Set Commit Description
             id: commit_desc
             run: |
@@ -29,9 +30,9 @@ Example:
             id: increment-semver-patch
             uses: Makeshift/increment-semver@master
             with:
-              version-level: ${{ steps.bump.outputs.first_match }}
+              version-level: ${{ contains(fromJson('["major", "minor", "patch"]'), steps.bump.outputs.first_match) || 'patch' }}
 
-    #     Examples
+    #     Or, non-dynamically
           - name: Increment Step Patch
             id: increment-semver-patch
             uses: Makeshift/increment-semver@master
@@ -56,3 +57,10 @@ Example:
               echo "The new patch version was ${{ steps.increment-semver-patch.outputs.version }}"
               echo "The new minor version was ${{ steps.increment-semver-minor.outputs.version }}"
               echo "The new Major version was ${{ steps.increment-semver-major.outputs.version }}"
+```
+
+See `.github/workflows/main.yml` for a full example, including doing a release.
+
+<!-- action-docs-inputs -->
+
+<!-- action-docs-outputs -->
