@@ -15,16 +15,23 @@ fi
 shift
 
 #version=$1
-echo "cd to github workspace"
+echo "cd to ${GITHUB_WORKSPACE}"
 cd "${GITHUB_WORKSPACE}" || exit
-git for-each-ref refs/tags/ --count=1 --sort=-version:refname --format='%(refname:short)'
+if ! find . -name '.github' >/dev/null; then
+  echo "No .github directory found"
+  exit 1
+fi
 
 version=$(git for-each-ref refs/tags/ --count=1 --sort=-version:refname --format='%(refname:short)')
-echo "Version: ${version}"
 
 if [ -z "${version}" ]; then
-  echo "Couldn't determine version"
-  exit 1
+  echo "Couldn't determine next version from tags."
+  if [[ "$NO_FIRST_RELEASE" == "true" ]]; then
+    echo "No tags found, and NO_FIRST_RELEASE is set. Exiting."
+    exit 1
+  fi
+  echo "Assuming first release and setting base version to v0.0.0"
+  version="v0.0.0"
 fi
 # Build array from version string.
 
