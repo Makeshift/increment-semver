@@ -62,5 +62,23 @@ Example usage:
 See `.github/workflows/main.yml` for a full example, including doing a release.
 
 <!-- action-docs-inputs -->
+## Inputs
+
+| parameter | description | required | default |
+| - | - | - | - |
+| version-level | Version Level to update (patch|minor|major) | `true` | patch |
+
+
+
+<!-- action-docs-inputs -->
+
+<!-- action-docs-outputs -->
+## Outputs
+
+| parameter | description |
+| - | - |
+| version | The incremented version |
+
+
 
 <!-- action-docs-outputs -->
