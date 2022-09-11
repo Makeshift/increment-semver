@@ -12,22 +12,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Echo github workspace
+        run: |
+          echo "${{ github.workspace }}"
+
       #     Examples
       - name: Increment Step Patch
         id: increment-semver-patch
-        uses: Makeshift/increment-semver@master
+        uses: ./
         with:
           version-level: "-p"
 
       - name: Increment Step Minor
         id: increment-semver-minor
-        uses: Makeshift/increment-semver@master
+        uses: ./
         with:
           version-level: "-m"
 
       - name: Increment Step Major
         id: increment-semver-major
-        uses: Makeshift/increment-semver@master
+        uses: ./
         with:
           version-level: "-M"
 

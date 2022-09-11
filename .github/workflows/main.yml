@@ -15,7 +15,7 @@ jobs:
 
       - name: Increment Step Patch
         id: increment-semver-patch
-        uses: Makeshift/increment-semver@master
+        uses: ./
         with:
           version-level: "-p"
 
