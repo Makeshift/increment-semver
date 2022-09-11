@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+  repository_dispatch:
+  workflow_dispatch:
 
 jobs:
   test-increment-semver-job:

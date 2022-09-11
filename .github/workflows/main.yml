@@ -1,6 +1,9 @@
 on:
   push:
-    branchs: master
+    branches:
+      - master
+  repository_dispatch:
+  workflow_dispatch:
 jobs:
   test-increment-semver-job:
     runs-on: ubuntu-latest
