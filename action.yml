@@ -13,7 +13,7 @@ inputs:
 outputs:
   version: # id of output
     description: "The incremented version"
-    value: ${{ steps.increment.outputs.version }}
+    value: ${{ steps.out.outputs.version }}
 runs:
   using: "composite"
   steps:
