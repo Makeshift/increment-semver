@@ -1,6 +1,6 @@
 # action.yml
 name: "Increment Semver (Based on previous Git Tags)"
-description: "Get the next version of a github repository"
+description: "Get the next version of a GitHub Repository based on its tags"
 branding:
   icon: "git-commit"
   color: "gray-dark"
