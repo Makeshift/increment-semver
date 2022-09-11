@@ -44,7 +44,7 @@ jobs:
         uses: ./
         id: semver
         with:
-          version-level: ${{ contains(fromJson('["major", "minor", "patch"]'), steps.bump.outputs.first_match) || 'patch' }}
+          version-level: ${{ contains(fromJson('["major", "minor", "patch"]'), steps.bump.outputs.first_match) && steps.bump.outputs.first_match || 'patch' }}
 
       - name: Release
         uses: marvinpinto/action-automatic-releases@v1.2.1

@@ -24,7 +24,7 @@ runs:
     - name: Get version
       id: out
       shell: bash
-      run: ./entrypoint.sh ${{ inputs.version-level }}
+      run: ${{ github.action_path }}/entrypoint.sh ${{ inputs.version-level }}
       env:
         GITHUB_WORKSPACE: ${{ github.workspace }}
         NO_FIRST_RELEASE: ${{ inputs.no-first-release }}
