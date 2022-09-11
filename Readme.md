@@ -30,7 +30,7 @@ Example usage:
             id: increment-semver-patch
             uses: Makeshift/increment-semver@master
             with:
-              version-level: ${{ contains(fromJson('["major", "minor", "patch"]'), steps.bump.outputs.first_match) || 'patch' }}
+              version-level: ${{ contains(fromJson('["major", "minor", "patch"]'), steps.bump.outputs.first_match) && steps.bump.outputs.first_match || 'patch' }}
 
     #     Or, non-dynamically
           - name: Increment Step Patch
@@ -59,7 +59,7 @@ Example usage:
               echo "The new Major version was ${{ steps.increment-semver-major.outputs.version }}"
 ```
 
-See `.github/workflows/main.yml` for a full example, including doing a release.
+See [Makeshift/semver-release-action](https://github.com/Makeshift/semver-release-action) for a full (and usable as an action!) example.
 
 <!-- action-docs-inputs -->
 ## Inputs
