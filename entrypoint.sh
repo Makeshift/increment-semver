@@ -21,7 +21,8 @@ if ! find . -name '.github' >/dev/null; then
   echo "No .github directory found"
   exit 1
 fi
-
+echo "Fetch all tags"
+git fetch --tags
 version=$(git for-each-ref refs/tags/ --count=1 --sort=-version:refname --format='%(refname:short)')
 
 if [ -z "${version}" ]; then
