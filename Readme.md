@@ -67,6 +67,7 @@ See `.github/workflows/main.yml` for a full example, including doing a release.
 | parameter | description | required | default |
 | - | - | - | - |
 | version-level | Version Level to update (patch|minor|major) | `true` | patch |
+| no-first-release | If this is false and there are no tags, the first release will be based on 0.0.0 | `false` | false |
 
 
 
