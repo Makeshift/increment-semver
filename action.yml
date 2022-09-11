@@ -21,3 +21,5 @@ runs:
       id: out
       shell: bash
       run: ./entrypoint.sh ${{ inputs.version-level }}
+      env:
+        GITHUB_WORKSPACE: ${{ github.workspace }}
