@@ -17,7 +17,7 @@ jobs:
         id: increment-semver-patch
         uses: ./
         with:
-          version-level: "-p"
+          version-level: patch
 
       #      Optional I'm using this to get a less static changelog for the body of the release
       - name: Get Changelog

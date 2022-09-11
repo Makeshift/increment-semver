@@ -1,5 +1,5 @@
 # action.yml
-name: "Increment Semver"
+name: "Increment Semver (Based on previous Git Tags)"
 description: "Get the next version of a github repository"
 branding:
   icon: "git-commit"
@@ -7,9 +7,9 @@ branding:
 author: Makeshift
 inputs:
   version-level: # id of input
-    description: "Version Level to update [-Mmp]"
+    description: "Version Level to update patch|minor|major"
     required: true
-    default: "-p"
+    default: patch
 outputs:
   version: # id of output
     description: "The incremented version"

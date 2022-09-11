@@ -21,19 +21,19 @@ jobs:
         id: increment-semver-patch
         uses: ./
         with:
-          version-level: "-p"
+          version-level: patch
 
       - name: Increment Step Minor
         id: increment-semver-minor
         uses: ./
         with:
-          version-level: "-m"
+          version-level: minor
 
       - name: Increment Step Major
         id: increment-semver-major
         uses: ./
         with:
-          version-level: "-M"
+          version-level: major
 
       # Use the output from the `Increment Step X` step
       - name: Get the output version
